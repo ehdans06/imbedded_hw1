@@ -55,7 +55,7 @@ int main() {
 							_bias_ip2,
 							10, ip2);
 
-			//accuracy(iter, ls, ip2);
+			accuracy(iter, ls, ip2);
 	}
 
 	return 0;
