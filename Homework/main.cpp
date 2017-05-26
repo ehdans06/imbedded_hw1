@@ -17,44 +17,37 @@
 using namespace std;
 
 int main() {
-	printf("A\n");
+
 	for (uint32_t iter = 0; iter < 1000; ++iter){
 			for (uint32_t i =0 ; i < 784; ++i){
 					test_image[iter][i] = ts[784 * iter + i];
 			}
-			printf("B\n");
+
 			conv(test_image[iter], make_pair(28, 28), 1,
 							_weights_conv1,
 							_bias_conv1, 5,
 							feature_map1,
 							make_pair(5, 5), 0, 1);
-			printf("C\n");
 			max_pool(feature_map1, make_pair(24, 24), 5,
 							make_pair(2, 2), 2, max_pool1);
-			printf("D\n");
 			conv(max_pool1, make_pair(12, 12), 5,
 							_weights_conv2,
 							_bias_conv2, 5,
 							feature_map2,
 							make_pair(5, 5), 0, 1);
-			printf("E\n");
 			max_pool(feature_map2, make_pair(8, 8), 5,
 							make_pair(2, 2), 2, max_pool2);
-			printf("F\n");
 			ip(max_pool2,
 							make_pair(4, 4), 5,
 							_weights_ip1,
 							_bias_ip1,
 							40, ip1);
-			printf("G\n");
 			TanH(ip1,	make_pair(1, 1), 40, tanh1);
-			printf("H\n");
 			ip(tanh1,
 							make_pair(1, 1), 40,
 							_weights_ip2,
 							_bias_ip2,
 							10, ip2);
-			printf("I\n");
 			//accuracy(iter, ls, ip2);
 	}
 
