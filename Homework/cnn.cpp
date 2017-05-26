@@ -24,19 +24,19 @@ void conv(w_t *image,								    // input image
 		//FIXME
 
 	// padding은 고려하지 않음
-	int img_size = image_size.first * image_size.second;
-	int i_size = num_features * img_size; // size of total input
-	int f_size = num_features * filter_size.first * filter_size.second; // size of 1 filter
+	uint32_t img_size = image_size.first * image_size.second;
+	uint32_t i_size = num_features * img_size; // size of total input
+	uint32_t f_size = num_features * filter_size.first * filter_size.second; // size of 1 filter
 
-	for (int i = 0; i < num_filters; i++) { // i = filter number
-		for (int j = 0; j < image_size.first - filter_size.first + 1; j++) { // j = height
-			for (int k = 0; k < image_size.second - filter_size.second + 1; k++) { // k = width
+	for (uint32_t i = 0; i < num_filters; i++) { // i = filter number
+		for (uint32_t j = 0; j < image_size.first - filter_size.first + 1; j++) { // j = height
+			for (uint32_t k = 0; k < image_size.second - filter_size.second + 1; k++) { // k = width
 
-				int sum = bias[i];
+				w_t sum = bias[i];
 
-				for (int a = 0; a < num_features; a++) {
-					for (int b = 0; b < filter_size.first; b++) {
-						for (int c = 0; c < filter_size.second; c++) {
+				for (uint32_t a = 0; a < num_features; a++) {
+					for (uint32_t b = 0; b < filter_size.first; b++) {
+						for (uint32_t c = 0; c < filter_size.second; c++) {
 							sum += image[a*img_size + (j+b)*image_size.second + (k+c)] * filter[i*f_size + a*filter_size.first*filter_size.second + b*filter_size.second + c];
 						}
 					}
@@ -56,16 +56,16 @@ void max_pool(w_t *image,									// input image
 			  w_t *max_pool) {								// output image
 		//FIXME
 
-	int img_size = image_size.first * image_size.second;
+	uint32_t img_size = image_size.first * image_size.second;
 
-	for (int i = 0; i < channel; i++) { // i = 현재 채널(depth)
-		for (int j = 0; j < image_size.first - max_pool_size.first + 1; j++) { // j = height
-			for (int k = 0; k < image_size.second - max_pool_size.second + 1; k++) { // k = width
+	for (uint32_t i = 0; i < channel; i++) { // i = 현재 채널(depth)
+		for (uint32_t j = 0; j < image_size.first - max_pool_size.first + 1; j++) { // j = height
+			for (uint32_t k = 0; k < image_size.second - max_pool_size.second + 1; k++) { // k = width
 				
-				int maxi = 0;
+				w_t maxi = 0;
 				
-				for (int a = j; a < j + max_pool_size.first; a++) {
-					for (int b = k; b < k + max_pool_size.second; b++) {
+				for (uint32_t a = j; a < j + max_pool_size.first; a++) {
+					for (uint32_t b = k; b < k + max_pool_size.second; b++) {
 						maxi = max(maxi, image[i * img_size + a * image_size.second + b]);
 					}
 				}
@@ -82,9 +82,9 @@ void ReLu(w_t *image,
 		  w_t *output) {
 		//FIXME
 
-	int img_size = image_size.first * image_size.second;
+	uint32_t img_size = image_size.first * image_size.second;
 
-	for (int i = 0; i < i_size; i++) {
+	for (uint32_t i = 0; i < i_size; i++) {
 		output[img_size * i + j] = image[img_size * i + j] ? image[img_size * i + j] : 0;
 	}
 }
@@ -95,10 +95,10 @@ void TanH(w_t *image, 												// input image
 		  w_t *output){												// output
 		//FIXME
 
-	int img_size = image_size.first * image_size.second;
-	int i_size = num_output * img_size; // size of total input
+	uint32_t img_size = image_size.first * image_size.second;
+	uint32_t i_size = num_output * img_size; // size of total input
 
-	for (int i = 0; i < i_size; i++) {
+	for (uint32_t i = 0; i < i_size; i++) {
 		output[i] = tanh(image[i]);
 	}
 }
@@ -111,13 +111,13 @@ void ip(w_t *input, pair<uint32_t, uint32_t> input_size,			// input image
 		w_t *output){												// output
 		//FIXME
 
-	int img_size = input_size.first * input_size.second;
-	int i_size = num_features * img_size; // size of total input
+	uint32_t img_size = input_size.first * input_size.second;
+	uint32_t i_size = num_features * img_size; // size of total input
 
-	for (int out = 0; out < num_output; out++) { // out = 현재 output#
+	for (uint32_t out = 0; out < num_output; out++) { // out = 현재 output#
 		
-		int sum = bias[out];
-		for (int i = 0; i < i_size; i++) { 
+		w_t sum = bias[out];
+		for (uint32_t i = 0; i < i_size; i++) {
 			sum += input[i] * weight[out * i_size + i];
 		}
 		output[out] = sum;
