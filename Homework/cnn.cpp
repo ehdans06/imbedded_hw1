@@ -25,7 +25,6 @@ void conv(w_t *image,								    // input image
 
 	// padding은 고려하지 않음
 	uint32_t img_size = image_size.first * image_size.second;
-	uint32_t i_size = num_features * img_size; // size of total input
 	uint32_t f_size = num_features * filter_size.first * filter_size.second; // size of 1 filter
 
 	for (uint32_t i = 0; i < num_filters; i++) { // i = filter number
@@ -83,9 +82,10 @@ void ReLu(w_t *image,
 		//FIXME
 
 	uint32_t img_size = image_size.first * image_size.second;
+	uint32_t i_size = num_output * img_size; // size of total input
 
 	for (uint32_t i = 0; i < i_size; i++) {
-		output[img_size * i + j] = image[img_size * i + j] ? image[img_size * i + j] : 0;
+		output[i] = (image[i] > 0) ? image[i] : 0;
 	}
 }
 
