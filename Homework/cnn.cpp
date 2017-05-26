@@ -134,7 +134,10 @@ void accuracy(uint32_t iter,
 	uint32_t predict = 0;
 
 	for (uint32_t i = 0; i < 10; i++) {
-		predict = (max_val < output[i]) ? i : predict;
+		if (max_val < output[i]) {
+			max_val = output[i];
+			predict = i;
+		}
 	}
 
 	if (predict == label[iter]) printf("test %d: correct\t(label: %d, prediction: %d)\n", iter, label[iter], predict);
