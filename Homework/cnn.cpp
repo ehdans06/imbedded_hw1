@@ -132,13 +132,12 @@ void accuracy(uint32_t iter,
 	//FIXME
 	w_t max_val = -9999;
 	uint32_t predict = 0;
-	char* str;
 
 	for (uint32_t i = 0; i < 10; i++) {
 		predict = (max_val < output[i]) ? i : predict;
 	}
 
-	str = (label[iter] == predict) ? "correct\n" : "incorrect\n";
-	printf(str);
+	if (predict == label[iter]) printf("test %d: correct\t(label: %d, prediction: %d)\n", iter, label[iter], predict);
+	else printf("test %d: incorrect\t(label: %d, prediction: %d)\n", iter, label[iter], predict);
 }
 
