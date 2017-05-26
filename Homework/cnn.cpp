@@ -58,17 +58,17 @@ void max_pool(w_t *image,									// input image
 	uint32_t img_size = image_size.first * image_size.second;
 
 	for (uint32_t i = 0; i < channel; i++) { // i = 현재 채널(depth)
-		for (uint32_t j = 0; j < image_size.first - max_pool_size.first + 1; j++) { // j = height
-			for (uint32_t k = 0; k < image_size.second - max_pool_size.second + 1; k++) { // k = width
+		for (uint32_t j = 0; j < image_size.first - max_pool_size.first + 1; j += stride) { // j = height
+			for (uint32_t k = 0; k < image_size.second - max_pool_size.second + 1; k += stride) { // k = width
 				
 				w_t maxi = 0;
 				
-				for (uint32_t a = j; a < j + max_pool_size.first; a++) {
-					for (uint32_t b = k; b < k + max_pool_size.second; b++) {
-						maxi = max(maxi, image[i * img_size + a * image_size.second + b]);
+				for (uint32_t a = 0; a < max_pool_size.first; a++) {
+					for (uint32_t b = 0; b < max_pool_size.second; b++) {
+						maxi = max(maxi, image[i * img_size + (j + a) * image_size.second + (k + b)]);
 					}
 				}
-				max_pool[i * (image_size.first - max_pool_size.first + 1) * (image_size.second - max_pool_size.second + 1) + j * (image_size.second - max_pool_size.second + 1) + k] = maxi;
+				max_pool[i * (image_size.first / stride) * (image_size.second / stride) + j / stride * (image_size.second / stride) + k / stride] = maxi;
 
 			}
 		}
