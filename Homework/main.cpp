@@ -25,32 +25,32 @@ int main() {
 
 			conv(test_image[iter], make_pair(28, 28), 1,
 							_weights_conv1,
-							_bias_conv1, 5,
+							_bias_conv1, 20,
 							feature_map1,
 							make_pair(5, 5), 0, 1);
 
-			max_pool(feature_map1, make_pair(24, 24), 5,
+			max_pool(feature_map1, make_pair(24, 24), 20,
 							make_pair(2, 2), 2, max_pool1);
 
-			conv(max_pool1, make_pair(12, 12), 5,
+			conv(max_pool1, make_pair(12, 12), 20,
 							_weights_conv2,
-							_bias_conv2, 5,
+							_bias_conv2, 50,
 							feature_map2,
 							make_pair(5, 5), 0, 1);
 
-			max_pool(feature_map2, make_pair(8, 8), 5,
+			max_pool(feature_map2, make_pair(8, 8), 50,
 							make_pair(2, 2), 2, max_pool2);
 
 			ip(max_pool2,
-							make_pair(4, 4), 5,
+							make_pair(4, 4), 50,
 							_weights_ip1,
 							_bias_ip1,
-							40, ip1);
+							500, ip1);
 
-			TanH(ip1,	make_pair(1, 1), 40, tanh1);
+			ReLu(ip1,	make_pair(1, 1), 500, tanh1);
 
 			ip(tanh1,
-							make_pair(1, 1), 40,
+							make_pair(1, 1), 500,
 							_weights_ip2,
 							_bias_ip2,
 							10, ip2);

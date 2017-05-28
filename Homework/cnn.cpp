@@ -11,6 +11,8 @@
 using namespace std;
 w_t test_image[1000][1 * 28 * 28];
 
+int corrects = 0;
+
 void conv(w_t *image,								    // input image
 	pair<uint32_t, uint32_t> image_size,			// input image size
 	uint32_t num_features,						// number of features in input = channel
@@ -140,7 +142,13 @@ void accuracy(uint32_t iter,
 		}
 	}
 
-	if (predict == label[iter]) printf("test %d: correct\t(label: %d, prediction: %d)\n", iter, label[iter], predict);
-	else printf("test %d: incorrect\t(label: %d, prediction: %d)\n", iter, label[iter], predict);
+	if (predict == label[iter]) {
+		float rate = (++corrects)/(iter + 1);
+		printf("test %d: correct\t(label: %d, prediction: %d)\t accuracy: %f\n", iter, label[iter], predict, rate);
+	} 
+	else {
+		float rate = corrects / (iter + 1);
+		printf("test %d: incorrect\t(label: %d, prediction: %d)\t accuracy: %f\n", iter, label[iter], predict, rate);
+	}
 }
 
