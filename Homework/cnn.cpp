@@ -143,11 +143,11 @@ void accuracy(uint32_t iter,
 	}
 
 	if (predict == label[iter]) {
-		float rate = (++corrects)/(iter + 1);
+		float rate = ((float)(++corrects))/((float)(iter + 1));
 		printf("test %d: correct\t(label: %d, prediction: %d)\t accuracy: %f\n", iter, label[iter], predict, rate);
 	} 
 	else {
-		float rate = corrects / (iter + 1);
+		float rate = ((float)corrects) / ((float)(iter + 1));
 		printf("test %d: incorrect\t(label: %d, prediction: %d)\t accuracy: %f\n", iter, label[iter], predict, rate);
 	}
 }
